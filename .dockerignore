@@ -1,0 +1,10 @@
+## Fichiers à ignorer pour Docker
+
+node_modules
+build
+dist
+pycache
+venv
+.env
+.git
+.vscode

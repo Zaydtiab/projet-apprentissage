@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  # Ton application Fullstack (1 seul conteneur)
+  app:
+    build: .
+    container_name: mon-projet-fullstack
+    ports:
+      - "8000:8000"
+    environment:
+      # En local, on pointe vers le service "db" ci-dessous
+      - DATABASE_URL=postgresql://user:password@db:5432/monapp
+      # Clés API (à remplacer ou mettre dans un fichier .env)
+      #- GEMINI_API_KEY=TaCleGeminiIci
+    depends_on:
+      - db
+
+  # Base de données (Simulation de Azure PostgreSQL)
+  db:
+    image: postgres:15-alpine
+    container_name: mon-projet-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: monapp
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
